@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sleep Data</title>
+  <%= stylesheet_link_tag :all %>
+	<%= stylesheet_link_tag 'start/jquery-ui-1.8.16.custom' %>
+  <%= javascript_include_tag "flot/jquery" %>
+  <%= javascript_include_tag "flot/excanvas.min" %>
+  <%= javascript_include_tag "flot/jquery.flot" %>
+  <%= javascript_include_tag "flot/jquery.flot.symbol" %>
+  <%= javascript_include_tag "jquery-ui-1.8.16.custom" %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+
+<center>
+	<h1>Sleep Data</h1>
+	<% if flash[:notice] %>
+		<div class="notice"><%= flash[:notice] %></div>
+	<% end %>
+	<%= yield %>
+</center>
+
+</body>
+</html>

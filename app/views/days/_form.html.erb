@@ -1,0 +1,71 @@
+<script type="text/javascript">
+	jQuery(function() {
+		jQuery('#day_string_picker').datepicker({
+			maxDate: 0,
+			defaultDate: "<%= @day.jquery_date %>",
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			onSelect: function(dateText, instance) {
+					jQuery('#day_string').val(dateText);
+			}
+		});
+	});
+</script>
+
+<%= form_for(@day) do |f| %>
+  <% if @day.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@day.errors.count, "error") %> prohibited this day from being saved:</h2>
+
+      <ul>
+      <% @day.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<table class=dataentry>
+	<tr>
+	  <td class="field">
+	    <%= f.label :day_string, "Day" %>
+		</td>
+		<td>
+			<%= f.hidden_field :day_string, { :size => 10, :id => "day_string", :value => @day.day_string || Time.now.strftime("%m/%d/%Y") } %>
+			<div id="day_string_picker"></div>
+		</td>
+  </tr>
+	<tr>
+	  <td class="field">
+	    Seven-Day Average Time
+		</td>
+		<td>
+	    <%= f.text_field :avg7hours, :size => 2 %>:
+	    <%= f.text_field :avg7minutes, :size => 2 %>
+		</td>
+	</tr>
+	<tr>
+	  <td class="field">
+	    <%= f.label :avg7index, "Seven-Day Average Index" %>
+		</td>
+		<td>
+	    <%= f.text_field :avg7index, :size => 4 %>
+		</td>
+	</tr>
+	<tr>
+		<td class="field">
+			<%= f.label :comment %>
+		</td>
+		<td>
+			<%= f.text_area :comment, :size => "50x2" %>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+  	<td class="actions">
+	    <%= f.submit %>
+			<%= button_to_function 'Cancel', "window.location = '" + days_path + "';" %>
+		</td>
+	</tr>
+</table>
+<% end %>

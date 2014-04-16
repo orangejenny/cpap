@@ -1,0 +1,45 @@
+<script type="text/javascript">
+	jQuery(function() {
+		var data = <%= raw graph_data().to_json %>;
+		var plot_data = new Array();
+		for (series in data) {
+			plot_data.push({ data: data[series], label: series });
+		}
+		jQuery.plot(jQuery('#plot'), plot_data, {
+			xaxis: { mode: "time", timeformat: "%m/%d" },
+			yaxis: { min: 0, tickSize: 1 },
+			grid: { hoverable: true },
+			points: { show: true },
+			lines: { show: true },
+		});
+	});
+</script>
+
+<%= link_to 'Add Data', new_day_path %>
+
+<div class="graph" id="plot">graph will go here</div>
+
+<table class=data>
+  <tr>
+    <th style="width: 15%;">Day</th>
+    <th style="width: 15%;">Seven-Day Average Time</th>
+    <th style="width: 15%;">Seven-Day Average Apnea Hypopnea Index</th>
+		<th style="width: 40%;">Comment</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @days.each do |day| %>
+  <tr class=<%= cycle('row-even', 'row-odd') %>>
+    <td><%= day.day_string %></td>
+    <td><%= time_string(day.avg7time) %></td>
+    <td><%= day.avg7index %></td>
+		<td><%= day.comment %></td>
+    <td><%= link_to 'Edit', edit_day_path(day) %></td>
+    <td><%= link_to 'Destroy', day, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
